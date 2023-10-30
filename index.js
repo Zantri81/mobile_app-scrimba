@@ -1,23 +1,32 @@
-import {initializeApp} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
-import {getDatabase, ref, push} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"       //importer ref, push quand il y a besoin
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
 
 const appSettings = {
-    databaseURL: "https://realtime-database-c25fc-default-rtdb.europe-west1.firebasedatabase.app/"      //ajouter la database de firebase
+    databaseURL: "https://realtime-database-c25fc-default-rtdb.europe-west1.firebasedatabase.app/"
 }
 
-const app = initializeApp(appSettings)      //connecte le projet avec Firebase
+const app = initializeApp(appSettings)
 const database = getDatabase(app)
 const shoppingListInDB = ref(database, "shoppingList")
 
+const inputFieldEl = document.getElementById("input-field")
+const addButtonEl = document.getElementById("add-button")
+const shoppingListEl = document.getElementById("shopping-list")
 
-const inputFieldEL = document.getElementById("input-field")
-const addBtnEL = document.getElementById("add-button")
+addButtonEl.addEventListener("click", function() {
+    let inputValue = inputFieldEl.value
+    
+    push(shoppingListInDB, inputValue)
+    
+    clearInputFieldEl()
 
-addBtnEL.addEventListener("click", function() {
-    let inputValue = inputFieldEL.value
-    
-    // Challenge: Use the Firebase function 'push' to push inputValue to the database
-    inputValue.push(shoppingListInDB, inputValue)
-    
-    console.log(inputValue)
+    appendItemToShoppingListEl(inputValue)
 })
+
+function clearInputFieldEl() {
+    inputFieldEl.value = ""
+}
+
+function appendItemToShoppingListEl(itemValue) {
+    shoppingListEl.innerHTML += `<li>${itemValue}</li>`
+}
