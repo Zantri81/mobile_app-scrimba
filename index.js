@@ -46,8 +46,9 @@ function clearInputFieldEl() {
     inputFieldEl.value = ""
 }
 
-function appendItemToShoppingListEl(itemValue) {
-    //shoppingListEl.innerHTML += `<li>${itemValue}</li>`
+function appendItemToShoppingListEl(item) {
+    let itemID = item[0]                // va afficher dans newEl.textContent soit la value soit la keys
+    let itemValue = item[1]
 
     let newEl = document.createElement("li")        //cela va créer <li></li>
     
