@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
-import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"        //importer "fonction" ici quand on doit les utiliser (ref, push etc)
 
 const appSettings = {
     databaseURL: "https://realtime-database-c25fc-default-rtdb.europe-west1.firebasedatabase.app/"
@@ -54,5 +54,9 @@ function appendItemToShoppingListEl(item) {
     
     newEl.textContent = itemValue           //ceci va ajouter du texte
 
+    newEl.addEventListener("dblclick", function() {
+        let exactLocationOfItemInDB = ref(database, `shopping-list/${itemID}`)      //ref= référence. Nous avons besoin de l'ID pour cibler le bon élément
+        remove(exactLocationOfItemInDB)
+    })
     shoppingListEl.append(newEl)            //ajoutera la variable a shoppingListEL (ul)
 }
